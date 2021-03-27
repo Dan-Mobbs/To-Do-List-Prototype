@@ -9,6 +9,10 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [status, setStatus] = useState("all");
   const [filteredTodos, setFilteredTodos] = useState([]);
+
+  useEffect(() => {
+    getLocalTodos();
+  }, []);
   
   useEffect(() => {
     filterHandler();
@@ -29,13 +33,18 @@ function App() {
     }
   };
 
-  const savetodos = () => {
-    if(localStorage.getItem('todos') === null){
-      localStorage.setItem('todos', JSON.stringify([]));
-    }else{
+  const savetodos = () => {    
       localStorage.setItem('todos', JSON.stringify(todos));
     };
-  }
+      
+  const getLocalTodos = () => {
+    if(localStorage.getItem('todos') === null){
+      localStorage.setItem('todos', JSON.stringify([]));
+    } else{
+      let toDoLocal = JSON.parse(localStorage.getItem('todos'));
+      setTodos(toDoLocal);
+    }
+  };
 
   return ( 
     <>
